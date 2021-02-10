@@ -1,11 +1,16 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 
-import "./App.css";
+import Header from "./header/Header";
+import TinderCards from "./tindercards/TinderCards";
 
-type AppProps = {};
-
-const App: FunctionComponent<AppProps> = () => {
-  return <div className="app">Hello world</div>;
+const App = () => {
+  return (
+    <div className="app">
+      <Header />
+      <TinderCards />
+      {/*SwipeButtons */}
+    </div>
+  );
 };
 
 export default App;
