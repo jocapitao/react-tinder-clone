@@ -1,5 +1,7 @@
-type PersonType = {
-  id: string;
+type Person = {
+  _id: string;
   name: string;
-  url: string;
+  imageUrl: string;
 };
+
+type Direction = "left" | "right" | "up" | "down";

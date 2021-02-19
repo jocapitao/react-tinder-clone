@@ -1,41 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TinderCard from "react-tinder-card";
+import axios from "../../api/axios";
 
 import "./TinderCards.css";
 
-const Persons: PersonType[] = [
-  {
-    id: "0001",
-    name: "Elon Musk",
-    url:
-      "http://t3.gstatic.com/images?q=tbn:ANd9GcSVVyE9C3wjVRHtaS9IHCiCJpqSEraahwjlDyt-KgxSh5xEdsVQXUUE7B8vpRQ-",
-  },
-  {
-    id: "0002",
-    name: "Jeff Bezos",
-    url:
-      "https://ichef.bbci.co.uk/news/2048/cpsprodpb/167EA/production/_116783129_hi065491102.jpg",
-  },
-];
-
 const TinderCards = () => {
-  const [people, setPeople] = useState<PersonType[]>(Persons);
+  const [people, setPeople] = useState<Person[]>([]);
 
-  const swiped = (dir: any, name: string) => {};
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/tinder/cards");
+      setPeople(data);
+    })();
+  }, []);
+
+  const swiped = (dir: Direction, name: string) => {};
 
   const outOfFrame = (name: string) => {};
 
   return (
     <div className="tinderCards">
       <div className="tinderCards__cardContainer">
-        {people.map(({ id, name, url }) => (
-          <div className="swipe" key={id}>
+        {people.map(({ _id, name, imageUrl }) => (
+          <div className="swipe" key={_id}>
             <TinderCard
               preventSwipe={["up", "down"]}
-              onSwipe={(dir: any) => swiped(dir, name)}
+              onSwipe={(dir: Direction) => swiped(dir, name)}
               onCardLeftScreen={() => outOfFrame(name)}
             >
-              <div style={{ backgroundImage: `url(${url})` }} className="card">
+              <div style={{ backgroundImage: `url(${imageUrl})` }} className="card">
                 <h3>{name}</h3>
               </div>
             </TinderCard>
